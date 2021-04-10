@@ -1,0 +1,147 @@
+body {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 16px;
+  line-height: 1;
+}
+
+textarea {
+  background: transparent;
+  border: none;
+  resize: none;
+  color: #000000;
+  border-left: 1px solid black;
+  padding: 10px;
+}
+
+.jumbotron {
+  text-align: center;
+  background-color: transparent;
+  color: black;
+  border-radius: 0;
+  border-bottom: 10px solid black;
+  padding: 2% 2%;
+  margin: 5% 1%;
+}
+
+.description {
+  white-space: pre-wrap;
+}
+
+#currentDay {
+  font-weight: bolder;
+  font-size: 32px;
+}
+
+.container {
+  width: 100%;
+  margin-left: 5%;
+  margin-right: 5%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* time-block: the left most column for all
+   hours for the planner and contains the hour: */
+.time-block {
+  font-weight: bold;
+  text-align: center;
+  border-radius: 15px;
+  border-top: 1px solid black; /* black white yellow */
+  border-bottom: 1px solid black; /* black; yellow; white; */
+  border-right: 3px solid black; /* black white yellow */
+  padding-top: 30px;
+  align-content: center;
+}
+
+.entryBlock {
+  padding: 5px 10px;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+/* row: used to style all rows
+   for each hour on the planner: */
+.row {
+  white-space: pre-wrap;
+  height: 80px;
+  border-top: 1px solid white;
+  /* border-top: 1px solid black; black white yellow */
+  margin-bottom: 2px;
+}
+
+.hour {
+  background-color: #ffffff;
+  color: #000000;
+  border-top: 1px dashed #000000;
+}
+
+/* ---------------------------------------------
+   past/present/future will be used to color
+   the background of each hour:
+   --------------------------------------------- */
+.past {
+  /* background-color: #d3d3d3; */
+  /* color: white; */
+  background-color: gray;
+  color: lightgray; /* darkslategray lightsalmon */
+}
+.present {
+  /* background-color: #ff6961; */
+  /* color: white; */
+  background-color: lightgray;
+  color: black; /* darkslategray */
+}
+.future {
+  background-color: #77dd77;
+  color: white;
+  /* background-color: lightgreen; */
+}
+
+ /* ---------------------------------------------
+   The right most column on the planner grid 
+   that is used to trigger a save to the
+   local storage: 
+   --------------------------------------------- */
+.saveBtn {
+  font-size: 24px;
+  /* border-left: 1px solid black; */
+  border-left: 3px solid black;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+  background-color: #06aed5;
+  /* background-color: #939eb9; */
+  color: white;
+  /* color: rgb(81, 86, 94); */
+  padding: 0 2px;
+}
+.saveBtn i:hover {
+  /* font-size: 20px; */
+  font-size: 12px;
+  transition: all 0.3s ease-in-out;
+  background-color: white; /* rgb(35, 72, 80); */
+  color: blue;
+}
+
+/* ------------------------------ */
+/* --- Need to be responsive: --- */
+/* ------------------------------ */
+
+@media screen and (max-width: 575px)
+{
+  .container {
+    min-width: 275px;
+    margin-left: 1%;
+    margin-right: 1%;
+    padding-left: 2%;
+    padding-right: 2%;
+  }
+  .entryBlock {
+      padding: 5px 5px;
+  }
+  .time-block {
+    font-size: 12px;
+    font-weight: bold;
+    margin: 0;
+    padding: auto 5px;
+  }
+}

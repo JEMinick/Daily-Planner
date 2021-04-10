@@ -1,0 +1,60 @@
+
+A sample of the text created for the Work Day Scheduler:
+
+<section>
+   <div class="row"> 
+      <div class="col-2 time-block clsHour1">7:00 am</div> 
+      <textarea class="col-9 entryBlock clsUserEntry1"></textarea> 
+      <button class="col-1 saveBtn far fa-save clsSaveBtn1></button> 
+   </div>
+   <div class="row"> 
+      <div class="col-2 time-block clsHour2">8:00 am</div> 
+      <textarea class="col-9 entryBlock clsUserEntry2"></textarea> 
+      <button class="col-1 saveBtn far fa-save clsSaveBtn2></button> 
+   </div>
+   <div class="row"> 
+      <div class="col-2 time-block clsHour3">9:00 am</div> 
+      <textarea class="col-9 entryBlock clsUserEntry3"></textarea> 
+      <button class="col-1 saveBtn far fa-save clsSaveBtn3></button> 
+   </div>
+   <div class="row"> 
+      <div class="col-2 time-block clsHour4">10:00 am</div> 
+      <textarea class="col-9 entryBlock clsUserEntry4"></textarea> 
+      <button class="col-1 saveBtn far fa-save clsSaveBtn4></button> 
+   </div>
+   <div class="row"> 
+      <div class="col-2 time-block clsHour5">11:00 am</div> 
+      <textarea class="col-9 entryBlock clsUserEntry5"></textarea> 
+      <button class="col-1 saveBtn far fa-save clsSaveBtn5></button> 
+   </div>
+   <div class="row"> 
+      <div class="col-2 time-block clsHour6">12:00 pm</div> 
+      <textarea class="col-9 entryBlock clsUserEntry6"></textarea> 
+      <button class="col-1 saveBtn far fa-save clsSaveBtn6></button> 
+   </div>
+   <div class="row"> 
+      <div class="col-2 time-block clsHour7">1:00 pm</div> 
+      <textarea class="col-9 entryBlock clsUserEntry7"></textarea> 
+      <button class="col-1 saveBtn far fa-save clsSaveBtn7></button> 
+   </div>
+   <div class="row"> 
+      <div class="col-2 time-block clsHour8">2:00 pm</div> 
+      <textarea class="col-9 entryBlock clsUserEntry8"></textarea> 
+      <button class="col-1 saveBtn far fa-save clsSaveBtn8></button> 
+   </div>
+   <div class="row"> 
+      <div class="col-2 time-block clsHour9">3:00 pm</div> 
+      <textarea class="col-9 entryBlock clsUserEntry9"></textarea> 
+      <button class="col-1 saveBtn far fa-save clsSaveBtn9></button> 
+   </div>
+   <div class="row"> 
+      <div class="col-2 time-block clsHour10">4:00 pm</div> 
+      <textarea class="col-9 entryBlock clsUserEntry10"></textarea> 
+      <button class="col-1 saveBtn far fa-save clsSaveBtn10></button> 
+   </div>
+   <div class="row"> 
+      <div class="col-2 time-block clsHour11">5:00 pm</div> 
+      <textarea class="col-9 entryBlock clsUserEntry11"></textarea> 
+      <button class="col-1 saveBtn far fa-save clsSaveBtn11></button> 
+   </div>
+</section>
