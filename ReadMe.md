@@ -3,9 +3,9 @@
 A simple calendar application that allows a user to save events for each hour of the day.  This app will run in the browser and feature dynamically updated HTML and CSS powered by jQuery.  The schedule and total hours are flexible and will accomodate a day up to 24 hours.
 
 ## The active link to the Scheduler app:
-[Ed's Code Quiz](https://jeminick.github.io/JEM-CodeQuiz/)
+[Ed's Planner](https://jeminick.github.io/Daily-Planner//)
 ### My gitHub for this project:
-[Code Quiz GitHub](https://github.com/JEMinick/JEM-CodeQuiz)
+[Daily-Planner GitHub](https://github.com/JEMinick/Daily-Planner)
 
 ## Installation
 
