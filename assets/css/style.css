@@ -43,6 +43,7 @@ textarea {
 /* time-block: the left most column for all
    hours for the planner and contains the hour: */
 .time-block {
+  color: blue;
   font-weight: bold;
   text-align: center;
   border-radius: 15px;
@@ -66,7 +67,7 @@ textarea {
   height: 80px;
   border-top: 1px solid white;
   /* border-top: 1px solid black; black white yellow */
-  margin-bottom: 2px;
+  margin-bottom: 1px;
 }
 
 .hour {
@@ -104,7 +105,6 @@ textarea {
    --------------------------------------------- */
 .saveBtn {
   font-size: 24px;
-  /* border-left: 1px solid black; */
   border-left: 3px solid black;
   border-top-right-radius: 15px;
   border-bottom-right-radius: 15px;
@@ -115,7 +115,6 @@ textarea {
   padding: 0 2px;
 }
 .saveBtn i:hover {
-  /* font-size: 20px; */
   font-size: 12px;
   transition: all 0.3s ease-in-out;
   background-color: white; /* rgb(35, 72, 80); */
