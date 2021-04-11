@@ -1,5 +1,5 @@
 
-var bDebugging = true;
+var bDebugging = false;
 
 var mainForm = document.querySelector(".container");
 
@@ -42,15 +42,16 @@ function ConvertTo24( sTime2Convert )
     return( iHour );
 }
 
-var sDailyList = "<section>";
+var sDailyList = "<section>";  // just created for logging purposes...
 var elMainFormContainerDiv = document.createElement( "section" );
 var elMainFormHours = mainForm.appendChild( elMainFormContainerDiv );
 
 aDailyHours.forEach( function(iHour)
-{ 
-    var sClsHour = "clsHour"+iHour;
-    var sClsUserEntry = "clsUserEntry"+iHour;
-    var sClsSaveBtn = "clsSaveBtn"+iHour;
+{
+    var sClsHour = "clsHour"+iHour;             // used to query the hour value
+    var sClsUserEntry = "clsUserEntry"+iHour;   // used for getItem() / setItem()
+    var sClsSaveBtn = "clsSaveBtn"+iHour;       // used for the click() event...
+
     var iRelativeHour = ( (iStartHour+iHour-1) % 24 ); // produces 0..23
     var iPlannerHour = ( (iStartHour+iHour-1) % 12 ); // produces 0..11
     var sAMorPM = sAMorPM = ( iRelativeHour < 12 ) ? "am" : "pm";
@@ -58,12 +59,13 @@ aDailyHours.forEach( function(iHour)
     if ( iPlannerHour === 0 )
         iPlannerHour = 12;
 
-    // OBJECTIVE:
+    // ---------------------- OBJECTIVE: ---------------------------------
     // <div class="row">
     //    <div class="col-2 time-block clsHour1">h:00 am/pm</div>
     //    <textarea class="col-9 entryBlock clsUserEntry1"></textarea>
     //    <button class="col-1 saveBtn far fa-save clsSaveBtn1"></button>
     // </div>
+    // -------------------------------------------------------------------
 
     var sMainFormHourRow = "div";
     var elMainFormHourRow = document.createElement(sMainFormHourRow);
@@ -152,20 +154,9 @@ selCurrentDate.textContent = moment().format('dddd[,] MMMM Do YYYY');
 var currentHour = moment().format('H');
 currentHour = parseInt(currentHour);
 
-// =============================================================================================
+// ======================================================================================================
+// ======================================================================================================
 
-var iHour1=-1,  iHour2=-1,  iHour3=-1,  iHour4=-1,  iHour5=-1,  iHour6=-1,
-    iHour7=-1,  iHour8=-1,  iHour9=-1,  iHour10=-1, iHour11=-1, iHour12=-1,
-    iHour13=-1, iHour14=-1, iHour15=-1, iHour16=-1, iHour17=-1, iHour18=-1,
-    iHour19=-1, iHour20=-1, iHour21=-1, iHour22=-1, iHour23=-1, iHour24=-1;
-
-var selUserEntry1=null,  selUserEntry2=null,  selUserEntry3=null,  selUserEntry4=null,
-    selUserEntry5=null,  selUserEntry6=null,  selUserEntry7=null,  selUserEntry8=null,
-    selUserEntry9=null,  selUserEntry10=null, selUserEntry11=null, selUserEntry12=null,
-    selUserEntry13=null, selUserEntry14=null, selUserEntry15=null, selUserEntry16=null,
-    selUserEntry17=null, selUserEntry18=null, selUserEntry19=null, selUserEntry20=null,
-    selUserEntry21=null, selUserEntry22=null, selUserEntry23=null, selUserEntry24=null;
-    
 /* ----------------------------------------------------------------------------------------------
     Just for fun:  Let's read the current DOM and identify the 2 following elements:
        1) The first hour on the schedule converted to a 24 hour format (0..23)
@@ -220,12 +211,12 @@ if ( bDebugging )
 // Now we need to build 2 arrays for color coding:
 // ------------------------------------------------
 //    iaHours : The hour value (on a scale of 0..23)
-//       (e.g., a 9am to 5pm day would be: [ 9, 10, 11, 12, 13, 14, 15 ] )
-//              an 11pm to 8am day would be: [ 23, 0, 1, 2, 3, 4, 5, 6, 7 ]
+//       (e.g., a 9am to 5pm day would be: [ 9, 10, 11, 12, 13, 14, 15, 16, 17 ] )
+//              an 11pm to 7am day would be: [ 23, 0, 1, 2, 3, 4, 5, 6, 7 ]
 //       An array of schedule hours to determine if the row should be past, present or future.
 ///
 //    selaUserEntry: An array of query selectors that have already been validated to exist.
-//       We use this array to modify add a class to reflect the appropriate background color.
+//       An array used to add a class to reflect the appropriate background color.
 
 var iaHours = [];
 var selaUserEntry = [];
@@ -305,6 +296,7 @@ function CreateStorageID( iHour )
     return( sStorageID );
 }
 
+// saveHourInfo( iHourRow: [1..24], sUserEntry: [string data] )
 function saveHourInfo( iHourRow, sUserEntry )
 {
     var sClsHour = ".clsHour"+iHourRow;
@@ -322,329 +314,44 @@ function saveHourInfo( iHourRow, sUserEntry )
         console.log( "getItem(\"" + sTimeHour + "\"): [" + recHourInfo.Hour + "],[" + recHourInfo.UserEntry + "]" );
 }
 
-var iHour = 0;
-var sStorageID = "";
-var sHourData = "";
-
 if ( bDebugging )
    console.log( "Begining the retrieval of [" + iTotalWorkdayHours + "] hours of data..." );
 
-   // ----------------------------------------------------------------------
-//    Hour-1:
-$(".clsSaveBtn1").on("click", function() {
-    var sUserEntry = $(".clsUserEntry1").val();
-    saveHourInfo( 1, sUserEntry );
-});
-iHour = ( (iStartHour+0) % 24 );
-sStorageID = CreateStorageID( iHour );
-if ( bDebugging )
-   console.log( "localStorage.getItem(\""+sStorageID+"\")" );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    if ( bDebugging )
-        console.log( "HOUR-1 (" + sStorageID + "): " + sHourData );
-    recHourInfo = JSON.parse( sHourData );
-    if ( bDebugging )
-        console.log( "getItem(\"" + sStorageID + "\"): [" + recHourInfo.Hour + "],[" + recHourInfo.UserEntry + "]" );
-    $(".clsUserEntry1").val(recHourInfo.UserEntry);
-}
 // ----------------------------------------------------------------------
-//    Hour-2:
-$(".clsSaveBtn2").on("click", function() {
-    var sUserEntry = $(".clsUserEntry2").val();
-    saveHourInfo( 2, sUserEntry );
-});
-iHour = ( (iStartHour+1) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry2").val(recHourInfo.UserEntry);
+for( var i=0 ; ( i < iTotalWorkdayHours ); i++ )
+{
+    // Converted the following 3 from var to let;
+    let iHour=(i+1);
+    let sSaveBtn = ".clsSaveBtn"+iHour;
+    let sUserEntry = ".clsUserEntry"+iHour;
+    
+    if ( bDebugging ) {
+        console.log( "------------------------------------------------" );
+        console.log( "Creating Event Handler: $("+sSaveBtn+").click()" );
+    }
+    //===========================================================================
+    //  Click event handler:
+    // ======================
+    $(sSaveBtn).click( function() {
+        if ( bDebugging ) {
+            console.log( "------------------------------------------------" );
+            console.log( "EVENT: $("+sSaveBtn+").click()" );
+        }
+        var sUserEntryVal = $(sUserEntry).val();
+        saveHourInfo( iHour, sUserEntryVal );
+    });
+    //===========================================================================
+    var sStorageID = CreateStorageID( ((iStartHour+i) % 24) );
+    if ( bDebugging ) {
+        console.log( "localStorage.getItem(\""+sStorageID+"\")" );
+    }
+    var sHourData = localStorage.getItem( sStorageID ) 
+    if ( sHourData ) {
+        if ( bDebugging )
+            console.log( "HOUR-" + (i+1) + " (" + sStorageID + "): [" + sHourData + "]" );
+        recHourInfo = JSON.parse( sHourData );
+        if ( bDebugging )
+            console.log( "$("+sUserEntry+").val(\""+recHourInfo.UserEntry+"\");" );
+        $(sUserEntry).val( recHourInfo.UserEntry );
+    }
 }
-// ----------------------------------------------------------------------
-//    Hour-3:
-$(".clsSaveBtn3").on("click", function() {
-    var sUserEntry = $(".clsUserEntry3").val();
-    saveHourInfo( 3, sUserEntry );
-});
-iHour = ( (iStartHour+2) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry3").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-4:
-$(".clsSaveBtn4").on("click", function() {
-    var sUserEntry = $(".clsUserEntry4").val();
-    saveHourInfo( 4, sUserEntry );
-});
-iHour = ( (iStartHour+3) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry4").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-5:
-$(".clsSaveBtn5").on("click", function() {
-    var sUserEntry = $(".clsUserEntry5").val();
-    saveHourInfo( 5, sUserEntry );
-});
-iHour = ( (iStartHour+4) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry5").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-6:
-$(".clsSaveBtn6").on("click", function() {
-    var sUserEntry = $(".clsUserEntry6").val();
-    saveHourInfo( 6, sUserEntry );
-});
-iHour = ( (iStartHour+5) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID );
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry6").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-7:
-$(".clsSaveBtn7").on("click", function() {
-    var sUserEntry = $(".clsUserEntry7").val();
-    saveHourInfo( 7, sUserEntry );
-});
-iHour = ( (iStartHour+6) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID );
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry7").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-8:
-$(".clsSaveBtn8").on("click", function() {
-    var sUserEntry = $(".clsUserEntry8").val();
-    saveHourInfo( 8, sUserEntry );
-});
-iHour = ( (iStartHour+7) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry8").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-9:
-$(".clsSaveBtn9").on("click", function() {
-    var sUserEntry = $(".clsUserEntry9").val();
-    saveHourInfo( 9, sUserEntry );
-});
-iHour = ( (iStartHour+8) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry9").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-10:
-$(".clsSaveBtn10").on("click", function() {
-    var sUserEntry = $(".clsUserEntry10").val();
-    saveHourInfo( 10, sUserEntry );
-});
-iHour = ( (iStartHour+9) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry10").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-11:
-$(".clsSaveBtn11").on("click", function() {
-    var sUserEntry = $(".clsUserEntry11").val();
-    saveHourInfo( 11, sUserEntry );
-});
-iHour = ( (iStartHour+10) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry11").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-12:
-$(".clsSaveBtn12").on("click", function() {
-    var sUserEntry = $(".clsUserEntry12").val();
-    saveHourInfo( 12, sUserEntry );
-});
-iHour = ( (iStartHour+11) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry12").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-13:
-$(".clsSaveBtn13").on("click", function() {
-    var sUserEntry = $(".clsUserEntry13").val();
-    saveHourInfo( 13, sUserEntry );
-});
-iHour = ( (iStartHour+12) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry13").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-14:
-$(".clsSaveBtn14").on("click", function() {
-    var sUserEntry = $(".clsUserEntry14").val();
-    saveHourInfo( 14, sUserEntry );
-});
-iHour = ( (iStartHour+13) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry14").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-15:
-$(".clsSaveBtn15").on("click", function() {
-    var sUserEntry = $(".clsUserEntry15").val();
-    saveHourInfo( 15, sUserEntry );
-});
-iHour = ( (iStartHour+14) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry15").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-16:
-$(".clsSaveBtn16").on("click", function() {
-    var sUserEntry = $(".clsUserEntry16").val();
-    saveHourInfo( 16, sUserEntry );
-});
-iHour = ( (iStartHour+15) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry16").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-17:
-$(".clsSaveBtn17").on("click", function() {
-    var sUserEntry = $(".clsUserEntry17").val();
-    saveHourInfo( 17, sUserEntry );
-});
-iHour = ( (iStartHour+16) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry17").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-18:
-$(".clsSaveBtn18").on("click", function() {
-    var sUserEntry = $(".clsUserEntry18").val();
-    saveHourInfo( 18, sUserEntry );
-});
-iHour = ( (iStartHour+17) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry18").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-19:
-$(".clsSaveBtn19").on("click", function() {
-    var sUserEntry = $(".clsUserEntry19").val();
-    saveHourInfo( 19, sUserEntry );
-});
-iHour = ( (iStartHour+18) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry19").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-20:
-$(".clsSaveBtn20").on("click", function() {
-    var sUserEntry = $(".clsUserEntry20").val();
-    saveHourInfo( 20, sUserEntry );
-});
-iHour = ( (iStartHour+19) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry20").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-21:
-$(".clsSaveBtn21").on("click", function() {
-    var sUserEntry = $(".clsUserEntry21").val();
-    saveHourInfo( 21, sUserEntry );
-});
-iHour = ( (iStartHour+20) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry21").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-22:
-$(".clsSaveBtn22").on("click", function() {
-    var sUserEntry = $(".clsUserEntry22").val();
-    saveHourInfo( 22, sUserEntry );
-});
-iHour = ( (iStartHour+21) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry22").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-23
-$(".clsSaveBtn23").on("click", function() {
-    var sUserEntry = $(".clsUserEntry23").val();
-    saveHourInfo( 23, sUserEntry );
-});
-iHour = ( (iStartHour+22) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry23").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
-//    Hour-24:
-$(".clsSaveBtn24").on("click", function() {
-    var sUserEntry = $(".clsUserEntry24").val();
-    saveHourInfo( 24, sUserEntry );
-});
-iHour = ( (iStartHour+23) % 24 );
-sStorageID = CreateStorageID( iHour );
-sHourData = localStorage.getItem( sStorageID ) 
-if ( sHourData ) {
-    recHourInfo = JSON.parse( sHourData );
-    $(".clsUserEntry24").val(recHourInfo.UserEntry);
-}
-// ----------------------------------------------------------------------
