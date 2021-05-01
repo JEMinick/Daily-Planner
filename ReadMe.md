@@ -33,4 +33,4 @@ Add a configuration button to allow the user to specify the time frame for the '
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
 ## License
-© 2021 JEM Services, LLC
+[License Info](./LICENSE)
